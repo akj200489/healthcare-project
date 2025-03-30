@@ -1,9 +1,13 @@
 pipeline {
   agent any
+    tools{
+      maven 'M2_HOME'
+          }
+   stages {
     stage('Git checkout') {
       steps {
            echo 'This is for cloning the gitrepo'
-           git branch: 'master', url: 'https://github.com/akj200489/healthcare-project.git'
+           git branch: 'master', url: 'https://github.com/Balunideepak/healthcare-project.git'
             }
           }
      stage('Maven Package') {
@@ -24,20 +28,5 @@ pipeline {
            sh 'docker build -t akj200489/healthcare:latest .'
             }
           }
-     stage('Login to Dockerhub') {
-      steps {
-             withCredentials([usernamePassword(credentialsId: 'dockeruser', passwordVariable: 'password', usernameVariable: 'username')]) {
-          // withCredentials([usernameColonPassword(credentialsId: 'docker-id-user', variable: 'docker-all')]) {
-          // withCredentials([string(credentialsId: 'dockercode', variable: 'dockervarcode')]) {
-           sh 'docker login -u akj200489 -p ${password}'
-                         }
-                   }
-               }
-     stage('Push the Docker image') {
-      steps {
-        sh 'docker push balunideepak/healthcare:latest'
-                                }
-            }
-                
-     }
+      }
 }
