@@ -35,5 +35,10 @@ pipeline {
                          }
                   }
             }
+     stage('Push the Docker image') {
+      steps {
+        sh 'docker push akj200489/healthcare:latest'
+                                }
+            }
     }
 }
