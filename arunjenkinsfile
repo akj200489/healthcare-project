@@ -28,5 +28,12 @@ pipeline {
            sh 'docker build -t akj200489/healthcare:latest .'
             }
           }
+     stage('Login to Dockerhub') {
+      steps {
+            withCredentials([usernamePassword(credentialsId: 'dockeruser', passwordVariable: 'password', usernameVariable: 'username')]) {
+            sh 'docker login -u akj200489 -p ${password}'
+                         }
+                  }
+            }
     }
 }
